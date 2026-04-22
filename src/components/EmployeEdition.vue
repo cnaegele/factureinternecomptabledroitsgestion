@@ -1,42 +1,31 @@
 <template>
-<div class="employes-container">
-    <h3>Employes avec droit d'édition pour le service<br>{{ lesDatas.descriptionService }}</h3>
-    
+  <div class="employes-container">
+    <h3>Comptables avec droit de gestion pour le service<br>{{ lesDatas.descriptionService }}</h3>
+
     <!-- Message si aucun employé -->
     <div v-if="lesDatas.employesEdition.length === 0" class="no-data">
       Aucun employé trouvé pour ce service
     </div>
-    
+
     <!-- Liste des employés -->
     <div v-else class="employes-list">
-      <div 
-        v-for="employe in lesDatas.employesEdition" 
-        :key="employe.id" 
-        :index="employe.id" 
-        class="employe-card"
-        :class="{ 'employe-inactif': !employe.actif }"
-      >
+      <div v-for="employe in lesDatas.employesEdition" :key="employe.id" :index="employe.id" class="employe-card"
+        :class="{ 'employe-inactif': !employe.actif }">
         <!-- Nom et prénom avec tooltip unité -->
         <div class="employe-info">
-          <span 
-            class="employe-nom" 
-            :title="employe.unite"
-          >
+          <span class="employe-nom" :title="employe.unite">
             {{ employe.nom }} {{ employe.prenom }}
           </span>
           <span v-if="!employe.actif" class="badge-inactif">Inactif</span>
         </div>
-        
+
         <!-- Bouton supprimer -->
         <div class="employe-actions">
-          <button 
-            @click="supprime(employe.id)"
-            class="btn-delete"
-            :title="`Supprimer ${employe.nom} ${employe.prenom}`"
-          >
+          <button @click="supprime(employe.id)" class="btn-delete"
+            :title="`Supprimer ${employe.nom} ${employe.prenom}`">
             <!-- Icône poubelle (vous pouvez utiliser une icône de votre choix) -->
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
+              <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
             </svg>
           </button>
         </div>
@@ -53,10 +42,10 @@ import { useDataStore } from '@/stores/datastore.ts'
 import { getComptableGestion, supprimeDroitComptableGestion } from '@/axioscalls.ts'
 const lesDatas = useDataStore()
 watch(() => lesDatas.idService, async (newValue) => {
-    console.log(`service choisi: ${lesDatas.idService}`)
-    const response: ApiResponseEmpS = await getComptableGestion(newValue)
-    lesDatas.employesEdition = response.success && response.data ? response.data : []
-    console.log(lesDatas.employesEdition)
+  console.log(`service choisi: ${lesDatas.idService}`)
+  const response: ApiResponseEmpS = await getComptableGestion(newValue)
+  lesDatas.employesEdition = response.success && response.data ? response.data : []
+  console.log(lesDatas.employesEdition)
 })
 
 // Fonction supprime 
@@ -99,7 +88,7 @@ const supprime = async (id: number) => {
 }
 
 .employe-card:hover {
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .employe-inactif {
@@ -151,7 +140,7 @@ const supprime = async (id: number) => {
 .input-montant:focus {
   outline: none;
   border-color: #007bff;
-  box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
 .currency {
@@ -210,7 +199,7 @@ const supprime = async (id: number) => {
     gap: 10px;
     text-align: left;
   }
-  
+
   .employe-montant,
   .employe-principal,
   .employe-actions {

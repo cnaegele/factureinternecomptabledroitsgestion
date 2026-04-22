@@ -1,19 +1,31 @@
 <template>
-<header class="header-flex">
-  <h2>Gestion des services traités par les comptables (édition / validation).</h2>
-  <div class="user-info">
-    <suspense>
-      <UserInformation groupeSecurite="GoelandManager"></UserInformation>
-    </suspense>
-  </div>
-</header>
+  <header class="header-flex">
+    <h2>Gestion des services traités par les comptables (édition / validation).</h2>
+    <div class="user-info">
+      <suspense>
+        <UserInformation groupeSecurite="GoelandManager"></UserInformation>
+      </suspense>
+    </div>
+  </header>
   <main>
     <div id="app">
       <div v-if="lesDatas.messageErreur != ''" id="divErreur">{{ lesDatas.messageErreur }}</div>
       <div v-else class="flex-container">
-        <div><suspense><DirectionService></DirectionService></suspense></div>
-        <div><suspense><EmployeEdition></EmployeEdition></suspense></div>
-        <div><suspense><EmployeChoix></EmployeChoix></suspense></div>
+        <div>
+          <suspense>
+            <DirectionService></DirectionService>
+          </suspense>
+        </div>
+        <div>
+          <suspense>
+            <EmployeEdition></EmployeEdition>
+          </suspense>
+        </div>
+        <div>
+          <suspense>
+            <EmployeChoix></EmployeChoix>
+          </suspense>
+        </div>
       </div>
 
     </div>
@@ -22,7 +34,7 @@
 
 <script setup lang="ts">
 import { useDataStore } from '@/stores/datastore.ts'
-import UserInformation from '@/components/UserInformation.vue'  
+import UserInformation from '@/components/UserInformation.vue'
 import DirectionService from '@/components/DirectionService.vue'
 import EmployeEdition from '@/components/EmployeEdition.vue'
 import EmployeChoix from '@/components/EmployeChoix.vue'
@@ -48,8 +60,8 @@ const lesDatas = useDataStore()
   margin: 0;
 }
 
-#divErreur{
-  background-color:lightsalmon;
+#divErreur {
+  background-color: lightsalmon;
   margin-left: 5px;
   margin-right: 5px;
   margin-top: 0px;

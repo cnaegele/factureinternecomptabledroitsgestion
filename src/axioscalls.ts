@@ -4,61 +4,61 @@ import type { Employe } from '@/stores/datastore.ts'
 
 let server: string = ''
 if (import.meta.env.DEV) {
-    server = 'https://mygolux.lausanne.ch'    
+    server = 'https://mygolux.lausanne.ch'
 }
 
 export interface Utilisateur {
-  id_employe?: number
-  nom_employe?: string
-  prenom_employe?: string
-  login_employe?: string
-  groupesecurite?: string
-  bingroupe?: number
-  message?: string
+    id_employe?: number
+    nom_employe?: string
+    prenom_employe?: string
+    login_employe?: string
+    groupesecurite?: string
+    bingroupe?: number
+    message?: string
 }
 export interface Service {
-  iduo: number
-  nomuo: string
-  descriptionuo: string
-  orderliste: string
-  orderlisteparent: string
+    iduo: number
+    nomuo: string
+    descriptionuo: string
+    orderliste: string
+    orderlisteparent: string
 }
 export interface Direction {
-  iduo: number
-  nomuo: string
-  descriptionuo: string
-  orderliste: string
-  services: Service[]
+    iduo: number
+    nomuo: string
+    descriptionuo: string
+    orderliste: string
+    services: Service[]
 }
 export interface EmployeChoix {
-  idemploye: number
-  nom: string
-  prenom: string
-  bactif: number
-  login: string
-  unite: string
-  directionabr?: string
-  serviceabr?: string
+    idemploye: number
+    nom: string
+    prenom: string
+    bactif: number
+    login: string
+    unite: string
+    directionabr?: string
+    serviceabr?: string
 }
 export interface ApiResponseDS {
-  success: boolean
-  message: string
-  data?: Direction[]
+    success: boolean
+    message: string
+    data?: Direction[]
 }
 export interface ApiResponseEmpS {
-  success: boolean
-  message: string
-  data?: Employe[]
+    success: boolean
+    message: string
+    data?: Employe[]
 }
 export interface ApiResponseMessage {
-  success: boolean
-  message: string
+    success: boolean
+    message: string
 }
 // Interface générique pour les réponses API
 export interface ApiResponse<T> {
-  success: boolean
-  message: string
-  data?: T[]
+    success: boolean
+    message: string
+    data?: T[]
 }
 
 export async function getDataUserInfo(groupeSecurite: string): Promise<Utilisateur> {
@@ -75,7 +75,7 @@ export async function getDirectionsServices(): Promise<ApiResponseDS> {
     const url: string = `${server}${page}`
     try {
         const response: AxiosResponse<Direction[]> = await axios.get(url)
-        const respData: ApiResponseDS= {
+        const respData: ApiResponseDS = {
             "success": true,
             "message": `ok`,
             "data": response.data
@@ -93,7 +93,7 @@ export async function getComptableGestion(idUO: number): Promise<ApiResponseEmpS
     const params = new URLSearchParams([['iduniteorg', idUO.toString()]])
     try {
         const response: AxiosResponse<Employe[]> = await axios.get(url, { params })
-        const respData: ApiResponseEmpS= {
+        const respData: ApiResponseEmpS = {
             "success": true,
             "message": `ok`,
             "data": response.data
@@ -156,17 +156,17 @@ export async function sauveDroitComptableGestion(idOrgunit: number, idEmploye: n
 }
 
 function traiteAxiosError<T>(error: AxiosError): ApiResponse<T> {
-  let msgErr: string = ''
-  if (error.response) {
-    msgErr = `${error.response.data}<br>${error.response.status}<br>${error.response.headers}`    
-  } else if (error.request.responseText) {
-    msgErr = error.request.responseText
-  } else {
-    msgErr = error.message
-  }
-  const respData: ApiResponse<T> = {
-    "success": false,
-    "message": `ERREUR. ${msgErr}`,
-  }
-  return respData
+    let msgErr: string = ''
+    if (error.response) {
+        msgErr = `${error.response.data}<br>${error.response.status}<br>${error.response.headers}`
+    } else if (error.request.responseText) {
+        msgErr = error.request.responseText
+    } else {
+        msgErr = error.message
+    }
+    const respData: ApiResponse<T> = {
+        "success": false,
+        "message": `ERREUR. ${msgErr}`,
+    }
+    return respData
 }

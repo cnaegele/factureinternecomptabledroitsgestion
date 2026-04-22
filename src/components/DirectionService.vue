@@ -1,33 +1,18 @@
 <template>
   <div class="directions-container">
     <h3 class="title">Directions et Services - Ville de Lausanne</h3>
-    
+
     <div class="directions-list">
-      <div 
-        v-for="direction in directions" 
-        :key="direction.iduo"
-        class="direction-item"
-      >
+      <div v-for="direction in directions" :key="direction.iduo" class="direction-item">
         <!-- En-tête de la direction -->
-        <div 
-          class="direction-header"
-          @click="toggleDirection(direction.iduo)"
-          :class="{ 'expanded': expandedDirections.has(direction.iduo) }"
-        >
+        <div class="direction-header" @click="toggleDirection(direction.iduo)"
+          :class="{ 'expanded': expandedDirections.has(direction.iduo) }">
           <div class="direction-info">
             <span class="direction-name">{{ direction.nomuo }}</span>
           </div>
           <div class="direction-toggle">
-            <svg 
-              class="chevron"
-              :class="{ 'rotated': expandedDirections.has(direction.iduo) }"
-              width="24" 
-              height="24" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              stroke-width="2"
-            >
+            <svg class="chevron" :class="{ 'rotated': expandedDirections.has(direction.iduo) }" width="24" height="24"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="6,9 12,15 18,9"></polyline>
             </svg>
           </div>
@@ -35,18 +20,11 @@
 
         <!-- Liste des services (collapsible) -->
         <Transition name="slide">
-          <div 
-            v-if="expandedDirections.has(direction.iduo)" 
-            class="services-container"
-          >
-            
+          <div v-if="expandedDirections.has(direction.iduo)" class="services-container">
+
             <div class="services-list">
-              <div 
-                v-for="service in direction.services" 
-                :key="service.iduo"
-                class="service-item"
-                @click="choixService(service.iduo, service.descriptionuo)"
-              >
+              <div v-for="service in direction.services" :key="service.iduo" class="service-item"
+                @click="choixService(service.iduo, service.descriptionuo)">
                 <div class="service-info">
                   <span class="service-name">{{ service.nomuo }}</span>
                 </div>
@@ -71,17 +49,17 @@ const directions: Direction[] = response.success && response.data ? response.dat
 console.log(directions)
 
 const toggleDirection = (directionId: number) => {
-    if (expandedDirections.value.has(directionId)) {
-        expandedDirections.value.delete(directionId)
-    } else {
-        expandedDirections.value.add(directionId)
-    }
+  if (expandedDirections.value.has(directionId)) {
+    expandedDirections.value.delete(directionId)
+  } else {
+    expandedDirections.value.add(directionId)
+  }
 }
 
-const choixService = (serviceId: number, serviceDescription: string) =>{
-    console.log(serviceId)
-    lesDatas.idService = serviceId   
-    lesDatas.descriptionService = serviceDescription   
+const choixService = (serviceId: number, serviceDescription: string) => {
+  console.log(serviceId)
+  lesDatas.idService = serviceId
+  lesDatas.descriptionService = serviceDescription
 }
 </script>
 
@@ -258,23 +236,23 @@ const choixService = (serviceId: number, serviceDescription: string) =>{
   .directions-container {
     padding: 16px;
   }
-  
+
   .title {
     font-size: 1.5rem;
   }
-  
+
   .direction-header {
     padding: 20px;
   }
-  
+
   .direction-name {
     font-size: 1.2rem;
   }
-  
+
   .services-list {
     padding: 0 20px 20px;
   }
-  
+
   .service-item {
     padding: 16px;
   }
